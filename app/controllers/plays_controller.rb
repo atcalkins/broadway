@@ -11,6 +11,7 @@ class PlaysController < ApplicationController
 
   def new
     @play = current_user.play.build
+    @categories = Category.all.map{ |c| [c.name, c.id] }
   end
 
   def create
@@ -24,7 +25,7 @@ class PlaysController < ApplicationController
   end
 
   def edit
-
+    @categories = Category.all.map{ |c| [c.name, c.id] }
   end
 
   def update
@@ -32,6 +33,7 @@ class PlaysController < ApplicationController
       redirect_to play_path(@play)
     else
       render 'edit'
+    end
   end
 
   def destroy
