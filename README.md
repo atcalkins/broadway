@@ -7,3 +7,4 @@ simple_form
 devise
 bootstrap sass
 jquery rails
+paperclip

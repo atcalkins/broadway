@@ -1,27 +1,25 @@
 class ReviewsController < ApplicationController
   before_action :find_play
-  before_action :find_review, only: [:edit, :update, :destroy]
+  before_action :find_review, only: %i[edit update destroy]
+  before_action :authenticate_user!, only: %i[new edit]
 
   def new
-    @play = Play.find(param[:play_id])
     @review = Review.new
   end
 
   def create
-    @play = Play.find(params[:play_id])
     @review = Review.new(review_params)
-    @review.play_id = play.id
+    @review.play_id = @play.id
     @review.user_id = current_user.id
 
-    if review.save
+    if @review.save
       redirect_to play_path(@play)
     else
       render 'new'
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @review.update(review_params)
@@ -48,5 +46,5 @@ class ReviewsController < ApplicationController
 
   def find_review
     @review = Review.find(params[:id])
-
+  end
 end
